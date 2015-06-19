@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
-from scipy import stats
 
 #%%
 
@@ -19,13 +18,20 @@ ydata = np.array([0.00064938,0.0025475,0.0086807,0.026244,0.071643,0.17916,0.414
 
 #yn = ydata + 0.2*np.random.normal(size=len(xdata))
 #%%
-pc = float(raw_input("What is the critical pressure of the substance?"))#4.26096
-tc = float(raw_input("What is the critical temperature of the substance?"))#369
-def fit_func( x, a, b, c, d):
+#pc = float(raw_input("What is the critical pressure of the substance?"))#4.26096
+#tc = float(raw_input("What is the critical temperature of the substance?"))#369
+pc = 4260960
+tc = 369
+
+def fit_func(x, a,b,c,d):
     #return -a + np.sqrt(a**2 + 4*(1/(((-2.294*10**-5*x**2)-(0.02681*x)+26.48)*(
     #(3.446*10**-6*x**3)-(4.558*10**-4*x**2)+(0.688*x)+163.74)))*(x*np.log(x)-x-b))*(
     #((1.723*10**-6*x**3)-(2.279*10**-4*x**2)+(0.0394*x)+81.87)/((-2.294*10**-5*x**2)-(0.02681*x)+26.48))
     #q = a*np.exp(b*x)+c    
+    #THETA = 1 - T/Tc
+    #RHS = 0
+    ##for i, param in enumerate(args):
+    #    RHS += param*THETA**
     q = pc * np.exp(((a*(1-(-x/tc))) + b * ((1-(-x/tc))**1.5) + c * ((1-(-x/tc))**3) + d * ((1-(-x/tc))**6) )/(1 - (1-(x/tc))))
     return q
 #%%
@@ -64,11 +70,13 @@ print 'R-squared Value:', r_squared
 plt.title("Vapor Pressure vs Temperature for your substance")
 plt.grid(True)
 plt.xlabel("Temperature (K)")
-plt.ylabel("Vapor Pressure (MPa)")
-plt.xlim([xdata[0]-20, xdata[-1] + 20])
-plt.ylim([ydata[0]-20, ydata[-1] + 20])
-plt.plot(xdata, fit_func(xdata, *popt), 'r-', label="Fitted Curve")
+plt.ylabel("Vapor Pressure (Pa)")
+#plt.xlim([xdata[0]-20, xdata[-1] + 20])
+#plt.ylim([ydata[0]-20, ydata[-1] + 20])
+xx = np.linspace(np.min(xdata),np.max(xdata))
+plt.plot(xx, fit_func(xx, *popt), 'r-', label="Fitted Curve")
 plt.plot(xdata, ydata, 'ko')
+plt.yscale('log')
 plt.show()
 
 
