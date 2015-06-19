@@ -19,8 +19,8 @@ ydata = np.array([0.00064938,0.0025475,0.0086807,0.026244,0.071643,0.17916,0.414
 
 #yn = ydata + 0.2*np.random.normal(size=len(xdata))
 #%%
-pc =4.26096 #float(raw_input("What is the critical pressure of the substance?"))
-tc = 369#float(raw_input("What is the critical temperature of the substance?"))
+pc = float(raw_input("What is the critical pressure of the substance?"))#4.26096
+tc = float(raw_input("What is the critical temperature of the substance?"))#369
 def fit_func( x, a, b, c, d):
     #return -a + np.sqrt(a**2 + 4*(1/(((-2.294*10**-5*x**2)-(0.02681*x)+26.48)*(
     #(3.446*10**-6*x**3)-(4.558*10**-4*x**2)+(0.688*x)+163.74)))*(x*np.log(x)-x-b))*(
